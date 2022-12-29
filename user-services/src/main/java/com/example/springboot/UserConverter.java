@@ -9,13 +9,13 @@ public class UserConverter {
                 .mobile(userRequestDto.getMobile())
                 .build();
     }
-    public static UserResponseDto userConverterToDto(User user){
-        return UserResponseDto.builder()
-                .id(user.getId())
-                .userName(user.getUserName())
-                .name(user.getName())
-                .email(user.getEmail())
-                .mobile(user.getMobile())
-                .build();
-    }
+//    public static UserResponseDto userConverterToDto(User user){
+//        return UserResponseDto.builder()
+//                .id(user.getId())
+//                .userName(user.getUserName())
+//                .name(user.getName())
+//                .email(user.getEmail())
+//                .mobile(user.getMobile())
+//                .build();
+//    }
 }

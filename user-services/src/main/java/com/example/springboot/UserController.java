@@ -1,10 +1,7 @@
 package com.example.springboot;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
@@ -15,12 +12,17 @@ public class UserController {
     public void createUser(@RequestBody UserRequestDto userRequestDto){
         userService.createUser(userRequestDto);
     }
-    @GetMapping("/get_user")
-    public UserResponseDto getUser(int id){
+    @GetMapping("/get_user_by_id")
+    public User getUser(@RequestParam("id") int id){
         return userService.getUser(id);
     }
+    @GetMapping("/get_user_by_username")
+    public User getUserByUserName(@RequestParam("userName") String userName) throws Exception{
+        return userService.getUserByUserName(userName);
+    }
 
-    @GetMapping("/gs")
+    //test purpose
+    @GetMapping("/test")
     public String getUser(){
         return "test";
     }

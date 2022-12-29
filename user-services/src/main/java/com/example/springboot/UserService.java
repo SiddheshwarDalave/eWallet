@@ -13,9 +13,16 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public UserResponseDto getUser(int id){
+
+
+    public User getUser(int id){
         User user =userRepository.findById(id).get();
-        UserResponseDto userResponseDto=UserConverter.userConverterToDto(user);
-        return userResponseDto;
+        //UserResponseDto userResponseDto=UserConverter.userConverterToDto(user); //not required
+        return user;
+    }
+
+    public User getUserByUserName(String userName) {
+        User user=userRepository.findByUserName(userName);
+        return user;
     }
 }
