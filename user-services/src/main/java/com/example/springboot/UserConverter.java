@@ -9,6 +9,7 @@ public class UserConverter {
                 .mobile(userRequestDto.getMobile())
                 .build();
     }
+    //no need
 //    public static UserResponseDto userConverterToDto(User user){
 //        return UserResponseDto.builder()
 //                .id(user.getId())

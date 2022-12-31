@@ -13,7 +13,7 @@ public class UserController {
         userService.createUser(userRequestDto);
     }
     @GetMapping("/get_user_by_id")
-    public User getUser(@RequestParam("id") int id){
+    public User getUser(@RequestParam("id") int id) throws Exception{
         return userService.getUser(id);
     }
     @GetMapping("/get_user_by_username")
