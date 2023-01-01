@@ -1,10 +1,14 @@
 package com.example.springboot;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@ToString
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class UserRequestDto {
     String userName;
     String name;
