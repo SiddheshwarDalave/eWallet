@@ -1,8 +1,11 @@
 package com.example.springboot;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -19,7 +22,12 @@ public class UserService {
     @Autowired
     ObjectMapper objectMapper;
 
+    //kafka
+    @Autowired
+    KafkaTemplate<String, String> kafkaTemplate;
+
     public final String REDIS_PREFIX_KEY="user::";
+    public final String CREATE_WALLET="create_wallet";
 
     public void createUser(UserRequestDto userRequestDto) {
         //save first to repo ant then in cache
@@ -29,6 +37,20 @@ public class UserService {
 
         //save in cache //implemented method
         saveInCache(user);
+
+        //Kafka config with wallet
+        //1.sending a msg throgh kfka using json object converting to string
+        JSONObject jsonUserObject= new JSONObject();
+
+        jsonUserObject.put("userName",user.getUserName());
+
+        String massage= jsonUserObject.toString();
+
+        kafkaTemplate.send(CREATE_WALLET,user.getUserName(),massage);
+
+
+
+
     }
     private void saveInCache(User user){
         Map map=objectMapper.convertValue(user, Map.class);
