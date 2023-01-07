@@ -43,10 +43,11 @@ public class UserService {
         JSONObject jsonUserObject= new JSONObject();
 
         jsonUserObject.put("userName",user.getUserName());
+        jsonUserObject.put("balance",0);
 
         String massage= jsonUserObject.toString();
 
-        kafkaTemplate.send(CREATE_WALLET,user.getUserName(),massage);
+        kafkaTemplate.send("create_wallet",massage);
 
 
 

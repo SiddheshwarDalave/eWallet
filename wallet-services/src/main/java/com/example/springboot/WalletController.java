@@ -1,5 +1,6 @@
 package com.example.springboot;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +10,7 @@ public class WalletController {
      WalletService walletService;
 
     @PostMapping("/create")
-    public void createWallet(@RequestParam("userName") String userName ){
+    public void createWallet(@RequestParam("userName") String userName ) throws JsonProcessingException {
         walletService.createWallet(userName);
     }
 

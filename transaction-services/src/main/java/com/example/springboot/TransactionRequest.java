@@ -9,7 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class WalletRequest {
-    String userName;
-    int balance;
+public class TransactionRequest {
+    private String fromUser;
+
+    private String toUser;
+
+    private int amount;
 }

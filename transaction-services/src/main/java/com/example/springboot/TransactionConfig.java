@@ -8,12 +8,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Properties;
 
 @Configuration
-public class WalletConfig {
-    //no redis contain only kafka config
+public class TransactionConfig {
+    //1.kafka properties
     @Bean
     Properties kafkaProperties(){
         Properties properties=new Properties();
@@ -31,27 +32,36 @@ public class WalletConfig {
         return properties;
     }
 
-    @Bean
-    ConsumerFactory<String,String> getConsumerFactory(){
-        return new DefaultKafkaConsumerFactory(kafkaProperties());
-    }
+    //2. factories -> for producer and consumer
 
     @Bean
-    ProducerFactory<String, String> getProducerFactory(){
+    ProducerFactory<String, String> getProducerfactory(){
         return new DefaultKafkaProducerFactory(kafkaProperties());
     }
 
-    //this only for consumer as they are listening simultaneously..so this property needs to be there
+    @Bean
+    ConsumerFactory<String, String> getConsumerfactory(){
+        return new DefaultKafkaConsumerFactory(kafkaProperties());
+    }
+
+    //3. ConcurrentKafkaListner which is used for only conumser to listen the massages
 
     @Bean
     ConcurrentKafkaListenerContainerFactory<String, String> concurrentKafkaListenerContainerFactory(){
-       ConcurrentKafkaListenerContainerFactory concurrentKafkaListenerContainerFactory=new ConcurrentKafkaListenerContainerFactory();
-       concurrentKafkaListenerContainerFactory.setConsumerFactory(getConsumerFactory());
-       return concurrentKafkaListenerContainerFactory;
+        ConcurrentKafkaListenerContainerFactory concurrentKafkaListenerContainerFactory=new ConcurrentKafkaListenerContainerFactory<>();
+        concurrentKafkaListenerContainerFactory.setConsumerFactory(getConsumerfactory());
+        return  concurrentKafkaListenerContainerFactory;
+
+    }
+
+    //4. kafka template for producer factory
+    @Bean
+    KafkaTemplate<String, String> kafkaTemplate(){
+        return new KafkaTemplate<>(getProducerfactory());
     }
 
     @Bean
-    KafkaTemplate<String,String> kafkaTemplate(){
-        return new KafkaTemplate<>(getProducerFactory());
+    RestTemplate getRestTemplate(){
+        return new RestTemplate();
     }
 }
