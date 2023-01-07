@@ -27,6 +27,7 @@ public class UserService {
     KafkaTemplate<String, String> kafkaTemplate;
 
     public final String REDIS_PREFIX_KEY="user::";
+
     public final String CREATE_WALLET="create_wallet";
 
     public void createUser(UserRequestDto userRequestDto) {

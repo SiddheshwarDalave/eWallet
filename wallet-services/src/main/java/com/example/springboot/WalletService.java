@@ -80,7 +80,9 @@ public class WalletService {
 
     @KafkaListener(topics = {"update_wallet"},groupId = "friends_group")
     public void updateWallet(String massage) throws JsonProcessingException {
+
        JSONObject jsonObject=objectMapper.readValue(massage, JSONObject.class);
+
        String fromUser= (String) jsonObject.get("fromUser");
        String toUser= (String) jsonObject.get("toUser");
        int transactionAmount= (int) jsonObject.get("amount");
@@ -107,6 +109,7 @@ public class WalletService {
             //UPDATE THE WALLETS
 
             Wallet fromWallet = walletRepository.findByUserName(fromUser);
+
             fromWallet.setBalance(fromWallet.getBalance() - transactionAmount);
             walletRepository.save(fromWallet);
 

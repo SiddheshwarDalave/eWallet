@@ -49,7 +49,7 @@ public class TransactionService {
 
         String massage =walletRequest.toString();
 
-        kafkaTemplate.send("update_walllet",massage);
+        kafkaTemplate.send("update_wallet",massage);
 
     }
     @KafkaListener(topics = {"update_transaction"},groupId = "friends_group")
