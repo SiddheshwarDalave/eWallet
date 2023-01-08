@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
     @GetMapping("/test")
     public String getUsers(){
-        return "tesxdzftT";
+        return "only for test purpose";
     }
 }

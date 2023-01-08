@@ -55,3 +55,5 @@ public class WalletConfig {
         return new KafkaTemplate<>(getProducerFactory());
     }
 }
+
+//done
